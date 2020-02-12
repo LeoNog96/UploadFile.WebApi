@@ -22,6 +22,7 @@ using UploadFile.WebApi.Repositories.Interfaces;
 using UploadFile.WebApi.Repositories;
 using UploadFile.WebApi.Services.Interfaces;
 using UploadFile.WebApi.Services;
+using Microsoft.OpenApi.Models;
 
 namespace UploadFile.WebApi.Extensions
 {
@@ -115,6 +116,63 @@ namespace UploadFile.WebApi.Extensions
                 auth.AddPolicy ("Bearer", new AuthorizationPolicyBuilder ()
                     .AddAuthenticationSchemes (JwtBearerDefaults.AuthenticationScheme‌​)
                     .RequireAuthenticatedUser ().Build ());
+            });
+        }
+
+        public static void ConfigureSwaggerDocs (this IServiceCollection services)
+        {
+            services.AddSwaggerGen (c =>
+            {
+                c.AddSecurityDefinition ("Bearer", new OpenApiSecurityScheme
+                {
+                    Description =
+                        "Autorização JWT usa-se Bearer token no cabeçalho." +
+                            " \r\n\r\n Entre com 'Bearer' [espaço] e o token do seu usuario." +
+                            "\r\n\r\nExemplo: \"Bearer 12345abcdef\"",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement (new OpenApiSecurityRequirement ()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string> ()
+                    }
+                });
+                c.SwaggerDoc ("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "UploadFile API",
+                    Description = "Documentação da WebApi do UploadFile",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Leonardo Nogueira da Silva",
+                            Email = "lnogueiradasilva628@gmail.com",
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "MIT",
+                    }
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+
+                var xmlPath = Path.Combine (AppContext.BaseDirectory, xmlFile);
+                
+                c.IncludeXmlComments (xmlPath);
             });
         }
     }

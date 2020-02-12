@@ -39,13 +39,15 @@ namespace UploadFile.WebApi
             services.ConfigureCors();
 
             services.ConfigurePostgresContext(Configuration);
-            
+
             // descomentar para ativar o auth
             services.ConfigureAuthentication(Configuration);
 
             services.ConfigureRepositories();
 
             services.ConfigureServices();
+
+            services.ConfigureSwaggerDocs();
 
             services.AddControllers()
                     .AddNewtonsoftJson(opt =>
@@ -63,6 +65,10 @@ namespace UploadFile.WebApi
             app.UseCors(option => option.AllowAnyOrigin());
 
             // app.UseHttpsRedirection();
+            
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
 
             app.UseRouting();
 

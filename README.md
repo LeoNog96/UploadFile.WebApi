@@ -5,6 +5,9 @@ webapi em .net core 3.1 para upload de arquivos com persistencia no banco e aute
 - dotnet core >= 3.1
 - Postgresql >= 12
 
+### Documentação
+- URL_SERVER/swagger
+
 ### Restauração de dependencias
 ```
 dotnet restore

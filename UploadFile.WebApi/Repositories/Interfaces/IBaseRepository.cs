@@ -39,7 +39,6 @@ namespace UploadFile.WebApi.Repositories.Interfaces
         /// Atualiza um registro no banco
         /// </summary>
         /// <param name="entity">Entidade atualizada</param>
-        /// <param name="id">Id da entidade a ser atualizada</param>
         Task Update(T entity);
 
         /// <summary>
