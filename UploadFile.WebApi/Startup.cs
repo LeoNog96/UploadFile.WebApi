@@ -59,7 +59,7 @@ namespace UploadFile.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseCors(option => option.AllowAnyOrigin());
 
             // app.UseHttpsRedirection();
@@ -70,11 +70,11 @@ namespace UploadFile.WebApi
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-            
-            // descomentar para ativar o middleware auth
-            app.UseAuthorization();
 
+            // descomentar para ativar o middleware auth
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 

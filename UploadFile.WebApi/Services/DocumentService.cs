@@ -22,7 +22,7 @@ namespace UploadFile.WebApi.Services
 
         public async Task<Document> Save(IFormFile document)
         {
-            if (document.Length == 0)
+            if (document == null || document.Length == 0)
             {
                 throw new Exception("Arquivo Vazio");
             }
@@ -37,8 +37,9 @@ namespace UploadFile.WebApi.Services
 
                 var newDocument = new Document
                 {
-                    UserId = 1,
-                    File = fileBytes
+                    UserId = UserId,
+                    File = fileBytes,
+                    FileName = document.FileName
                 };
 
                 return await _repo.Save(newDocument);

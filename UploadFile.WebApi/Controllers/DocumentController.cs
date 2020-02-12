@@ -23,9 +23,9 @@ namespace UploadFile.WebApi.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<ActionResult> Post ([FromForm] IFormFile std)
+        public async Task<ActionResult> Post ([FromForm] IFormFile file)
         {
-            var document = await _service.Save(std);
+            var document = await _service.Save(file);
 
             if(document == null)
             {
