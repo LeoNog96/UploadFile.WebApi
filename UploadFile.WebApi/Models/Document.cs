@@ -7,7 +7,7 @@ namespace UploadFile.WebApi.Models
         public string FileName { get; set;}
         public long UserId { get; set; }
 
-        // classe virutal quando utilizado include na query retorna o objeto usuario
+        // classe "virtual" quando utilizado include na query retorna o objeto usuario
         // relacionado
         public virtual User User { get; set; }
     }
